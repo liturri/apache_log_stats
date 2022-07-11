@@ -17,23 +17,27 @@ void erase_if(ContainerT &items, const PredicateT &predicate)
 
 void ParseLogFile::CleanOldEntries()
 {
-    time_t now = time(NULL);
-    urlList.sort([](const auto &a, const auto &b) -> bool
-                 { return a.GetTime() < b.GetTime(); });
-    while (urlList.size() > 0 && urlList.begin()->GetTime() < now - cfg::GetItemsKeepTime())
+    const time_t now = time(NULL);
+    for (auto it = urlList.begin(); it != urlList.end();)
     {
-        auto item = urlList.begin();
-        auto normalPath = item->NormalizedPath();
-        auto normalSource = item->NormalizedSource();
+        if (it->GetTime() < now - cfg::GetItemsKeepTime())
+        {
+            auto normalPath = it->NormalizedPath();
+            auto normalSource = it->NormalizedSource();
 
-        counterPerSource[normalSource] -= *item;
-        if (counterPerSource[normalSource].GetCount() == 0)
-            counterPerSource.erase(normalSource);
+            counterPerSource[normalSource] -= *it;
+            if (counterPerSource[normalSource].GetCount() == 0)
+                counterPerSource.erase(normalSource);
 
-        counterPerPath[normalPath] -= *item;
-        if (counterPerPath[normalPath].GetCount() == 0)
-            counterPerPath.erase(normalPath);
-        urlList.pop_front();
+            counterPerPath[normalPath] -= *it;
+            if (counterPerPath[normalPath].GetCount() == 0)
+                counterPerPath.erase(normalPath);
+            it = urlList.erase(it);
+        }
+        else
+        {
+            ++it;
+        }
     }
     erase_if(timeCouters, [](const auto &a)
              { return a.first < time(NULL) - 10 * 60; });

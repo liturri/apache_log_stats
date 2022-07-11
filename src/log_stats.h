@@ -2,14 +2,13 @@
 #define __LOG_STATS_H__
 #include "config.h"
 #include "follow.h"
+#include "logline.h"
+#include "summaries.h"
 #include <fstream>
 #include <list>
 #include <map>
 #include <regex>
 #include <string>
-#include "summaries.h"
-#include "logline.h"
-
 
 class ParseLogFile
 {
@@ -26,9 +25,11 @@ private:
     // int itemsKeepTime;
     // int refreshTime;
 
+protected:
+    void CleanOldEntries();
+
 public:
     ParseLogFile(const std::string &filename) : logFile(filename, 80000){};
-    void CleanOldEntries();
     void Loop();
     const std::map<std::string, PathSummary> GetTopTenPath() const;
     const std::map<std::string, SourceSummary> GetTopTenSource() const;

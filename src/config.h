@@ -15,7 +15,6 @@ public:
 
     static int GetRefreshTime() { return cfg::refreshTime; }
     static void SetRefreshTime(int refreshTime) { cfg::refreshTime = refreshTime; }
-
 };
 
 #endif // CONFIG_H

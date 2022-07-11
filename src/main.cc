@@ -1,8 +1,7 @@
-#include "log_stats.h"
-#include <iostream>
-#include "term.h"
 #include "app.h"
-
+#include "log_stats.h"
+#include "term.h"
+#include <iostream>
 
 int main(int argc, char **argv)
 {

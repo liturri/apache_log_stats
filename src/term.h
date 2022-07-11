@@ -1,8 +1,8 @@
 #ifndef TERM_H
 #define TERM_H
 
-#include <ncurses.h>
 #include <memory>
+#include <ncurses.h>
 #include <string>
 
 class coord
@@ -22,7 +22,7 @@ private:
 
 public:
     Window(int x1, int y1, int x2, int y2);
-    Window(WINDOW *window) : thisWindow(window), deleteWindow(false) {};
+    Window(WINDOW *window) : thisWindow(window), deleteWindow(false){};
     ~Window();
     int SetEcho(bool echo);
     void WriteXY(int x, int y, const std::string &str) const;
@@ -35,12 +35,12 @@ public:
     void Refresh();
     void Border();
     void Erase();
-    void FillBg(chtype c=' ');
+    void FillBg(chtype c = ' ');
     int GetKey();
     void NoDelay(bool d);
 };
 
-class Term: public Window
+class Term : public Window
 {
 
 public:

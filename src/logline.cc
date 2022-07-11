@@ -1,10 +1,8 @@
+#include "logline.h"
 #include <cstring>
 #include <iostream>
-#include "logline.h"
-
 
 const std::regex reMatchRegexp(R"(^([^ ]*) ([^ ]*) ([^ ]*) \[([^ ]*) ([^ ]*)\] \"([^ ]*) ([^ ]*) (HTTP\/[^ ]*)\" ([^ ]*) ([^ ]*) \"(.*[^ ]*)\" \"(.*)\" ([0-9]+)\/([0-9]+)$)");
-
 
 time_t StrDate2Time(std::string strDate)
 {
@@ -24,7 +22,6 @@ time_t StrDate2Time(std::string strDate)
     }
     return time_stamp;
 }
-
 
 bool LogLine::Parse()
 {
@@ -52,7 +49,8 @@ std::string LogLine::NormalizedPath() const
         return path;
 }
 
-std::string LogLine::NormalizedSource() const {
+std::string LogLine::NormalizedSource() const
+{
     return source;
 }
 
@@ -71,4 +69,3 @@ std::string LogLine::GetMaxLenPath(unsigned int maxLength) const
         return normalPath;
     }
 }
-

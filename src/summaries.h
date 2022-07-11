@@ -2,9 +2,8 @@
 #define SUMMARIES_H
 
 #include "config.h"
-#include <string>
 #include "logline.h"
-
+#include <string>
 
 class PathSummary
 {
@@ -30,7 +29,6 @@ public:
     std::string GetNormalizeKey() const { return normalizeKey; }
     std::string GetMaxLenKey(unsigned int maxLength) const;
     time_t GetOldestTime() const { return std::max(oldestTime, time(NULL) - cfg::GetItemsKeepTime()); }
-
 };
 
 class SourceSummary : public PathSummary
@@ -38,6 +36,5 @@ class SourceSummary : public PathSummary
 public:
     SourceSummary &operator=(const LogLine &other) override;
 };
-
 
 #endif // SUMMARIES_H

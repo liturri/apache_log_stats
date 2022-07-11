@@ -231,7 +231,7 @@ void StatApp::WriteStats()
     std::ofstream file("/tmp/timecounter.dump", std::ios::out | std::ios::trunc);
     if (file.is_open())
     {
-        file << "Time: from " << time(NULL) - 10*60 << " to " << time(NULL) << std::endl;
+        file << "Time: from " << time(NULL) - 10 * 60 << " to " << time(NULL) << std::endl;
         for (auto &item : parser.getTimeCouters())
         {
             file << item.first << " " << item.second << std::endl;

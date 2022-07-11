@@ -129,7 +129,8 @@ void Window::WriteXY(int x, int y, const std::string &str) const
     mvwaddstr(thisWindow, y, x, str.c_str());
 }
 
-void Window::WriteChar(chtype c) {
+void Window::WriteChar(chtype c)
+{
     ::waddch(thisWindow, c);
 }
 

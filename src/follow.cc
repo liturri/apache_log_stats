@@ -70,7 +70,7 @@ void Follow::SeekBackLines(std::streamoff linesBack)
         if (ch == '\n')
             linesBack--;
     }
-    ifs.seekg(pos+1, std::ios::beg);
+    ifs.seekg(pos + 1, std::ios::beg);
 }
 
 // void Follow::SeekBackLines(std::streamoff linesBack)

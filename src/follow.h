@@ -1,9 +1,8 @@
 #ifndef FOLLOW_H
 #define FOLLOW_H
-#include <string>
 #include <fstream>
+#include <string>
 #include <thread>
-
 
 class Follow
 {
@@ -17,6 +16,5 @@ public:
     std::string ReadLine();
     void SeekBackLines(std::streamoff linesBack);
 };
-
 
 #endif // FOLLOW_H

@@ -7,7 +7,6 @@
 
 typedef std::pair<std::string, PathSummary> PathPair;
 
-
 class StatApp
 {
 public:

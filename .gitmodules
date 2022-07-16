@@ -1,0 +1,4 @@
+[submodule "libs/jpcre2"]
+	path = libs/jpcre2
+	url = https://github.com/jpcre2/jpcre2.git
+	branch = release

@@ -23,8 +23,8 @@ endif()
 # Build with Profile enabled
 if(CMAKE_BUILD_PROFILE)
     set(CMAKE_EXE_LINKER_FLAGS "-lprofiler")
+    message(STATUS "Profiler link...")
 endif()
-
 
 set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
@@ -38,6 +38,6 @@ find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
 
 
-# add_subdirectory(libs)
+add_subdirectory(libs)
 add_subdirectory(libs-remote)
 add_subdirectory(src)

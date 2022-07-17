@@ -4,6 +4,7 @@
 #include "log_stats.h"
 #include "term.h"
 #include <string>
+#include <vector>
 
 typedef std::pair<std::string, PathSummary> PathPair;
 

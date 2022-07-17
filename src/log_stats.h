@@ -7,7 +7,6 @@
 #include <fstream>
 #include <list>
 #include <map>
-#include <regex>
 #include <string>
 
 class ParseLogFile

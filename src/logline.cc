@@ -1,8 +1,14 @@
 #include "logline.h"
 #include <cstring>
 #include <iostream>
+#include <jpcre2.hpp>
+#include <regex>
 
-const std::regex reMatchRegexp(R"(^([^ ]*) ([^ ]*) ([^ ]*) \[([^ ]*) ([^ ]*)\] \"([^ ]*) ([^ ]*) (HTTP\/[^ ]*)\" ([^ ]*) ([^ ]*) \"(.*[^ ]*)\" \"(.*)\" ([0-9]+)\/([0-9]+)$)");
+typedef jpcre2::select<char> jp;
+
+const std::string reMatchString = R"(^([^ ]*) ([^ ]*) ([^ ]*) \[([^ ]*) ([^ ]*)\] \"([^ ]*) ([^ ]*) (HTTP\/[^ ]*)\" ([^ ]*) ([^ ]*) \"(.*[^ ]*)\" \"(.*)\" ([0-9]+)\/([0-9]+)$)";
+const std::regex reMatchRegexp(reMatchString);
+const jp::Regex re(reMatchString);
 
 time_t StrDate2Time(std::string strDate)
 {
@@ -23,20 +29,51 @@ time_t StrDate2Time(std::string strDate)
     return time_stamp;
 }
 
+bool LogLine::ParseRegExp()
+{
+    std::smatch matchVector;
+    if (!std::regex_match(line, matchVector, reMatchRegexp))
+        return false;
+
+    path = matchVector[7];
+    source = matchVector[1];
+    std::string timeString = matchVector[4];
+
+    time_stamp = StrDate2Time(timeString);
+    secs = std::stof(matchVector[14]) / 1000000.0;
+    return true;
+}
+
 bool LogLine::Parse()
 {
-    std::smatch sm;
+    return ParsePcre2();
+};
 
-    if (!std::regex_match(line, sm, reMatchRegexp))
-    {
+bool LogLine::ParsePcre2()
+{
+
+    jp::VecNum vec_num;
+    jp::RegexMatch rm;
+    size_t c = rm.setRegexObject(&re)                    // set associated Regex object
+                   .setSubject(&line)                    // set subject string
+                   .addModifier("")                      // add modifier
+                   .setNumberedSubstringVector(&vec_num) // pass pointer to VecNum vector
+                   .match();                             // Finally perform the match.
+    if (c != 1)
         return false;
-    }
-    path = sm[7];
-    source = sm[1];
 
-    std::string timeString = sm[4];
+    const auto &matchVector = vec_num[0];
+
+    // std::smatch matchVector;
+    // if (!std::regex_match(line, matchVector, reMatchRegexp))
+    //     return false;
+
+    path = matchVector[7];
+    source = matchVector[1];
+    std::string timeString = matchVector[4];
+
     time_stamp = StrDate2Time(timeString);
-    secs = std::stof(sm[14]) / 1000000.0;
+    secs = std::stof(matchVector[14]) / 1000000.0;
     return true;
 }
 

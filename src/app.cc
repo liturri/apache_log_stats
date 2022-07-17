@@ -1,6 +1,8 @@
 #include "app.h"
 #include <cmath>
 #include <fmt/core.h>
+#include <vector>
+#include <functional>
 
 StatApp::StatApp(const std::string &filename) : t(), parser(filename)
 {

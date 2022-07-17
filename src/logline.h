@@ -1,7 +1,7 @@
 #ifndef LOGLINE_H
 #define LOGLINE_H
 
-#include <regex>
+// #include <regex>
 #include <string>
 
 class LogLine
@@ -16,6 +16,8 @@ private:
 public:
     LogLine(const std::string &line) : line(line){};
     bool Parse();
+    bool ParsePcre2();
+    bool ParseRegExp();
     std::string NormalizedPath() const;
     std::string NormalizedSource() const;
 

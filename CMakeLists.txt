@@ -27,5 +27,4 @@ find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
 
 add_subdirectory(libs)
-add_subdirectory(libs-remote)
 add_subdirectory(src)

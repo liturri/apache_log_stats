@@ -1,4 +1,5 @@
 #include "logline.h"
+#include "config.h"
 #include <cstring>
 #include <iostream>
 #include <jpcre2.hpp>
@@ -46,7 +47,10 @@ bool LogLine::ParseRegExp()
 
 bool LogLine::Parse()
 {
-    return ParsePcre2();
+    if (cfg::GetStdReg())
+        return ParseRegExp();
+    else
+        return ParsePcre2();
 };
 
 bool LogLine::ParsePcre2()

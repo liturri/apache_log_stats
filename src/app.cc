@@ -1,8 +1,8 @@
 #include "app.h"
 #include <cmath>
 #include <fmt/core.h>
-#include <vector>
 #include <functional>
+#include <vector>
 
 StatApp::StatApp(const std::string &filename) : t(), parser(filename)
 {
@@ -93,7 +93,7 @@ void StatApp::RefreshScreen()
         break;
     case 4:
         sortCmp = [](const PathPair &a, const PathPair &b)
-        { return a.second.GetSumTime() / a.second.GetCount() > b.second.GetSumTime() / b.second.GetCount(); };
+        { return a.second.GetSumTime() / static_cast<float>(a.second.GetCount()) > b.second.GetSumTime() / static_cast<float>(b.second.GetCount()); };
         break;
     }
     // sortCmp = [](const PathPair &a, const PathPair &b)
@@ -152,7 +152,7 @@ void StatApp::DisplayTopTen(const std::vector<PathPair> &topItemsList)
         if (count > t.Size().y - 6)
             break;
         count++;
-        t.WriteXY(1, count + 3, fmt::format("{:<60}{:7d}{:8.2f}{:10.2f}{:10.2f}   ", item.second.GetMaxLenKey(60), item.second.GetCount(), item.second.GetCountPerSec(), item.second.GetSumTime(), item.second.GetSumTime() / item.second.GetCount()));
+        t.WriteXY(1, count + 3, fmt::format("{:<60}{:7d}{:8.2f}{:10.2f}{:10.2f}   ", item.second.GetMaxLenKey(60), item.second.GetCount(), item.second.GetCountPerSec(), item.second.GetSumTime(), item.second.GetSumTime() / static_cast<float>(item.second.GetCount())));
     }
 }
 

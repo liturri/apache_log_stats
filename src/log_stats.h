@@ -8,6 +8,7 @@
 #include <list>
 #include <map>
 #include <string>
+#include <chrono>
 
 class ParseLogFile
 {
@@ -16,6 +17,8 @@ private:
     std::map<std::string, PathSummary> counterPerPath;
     std::map<std::string, SourceSummary> counterPerSource;
     std::map<time_t, unsigned int> timeCouters;
+    // time passed since the last clean up of the counters
+    std::chrono::time_point<std::chrono::steady_clock> lastCleanUp = std::chrono::steady_clock::now();
 
     Follow logFile;
 

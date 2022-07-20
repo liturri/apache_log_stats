@@ -24,7 +24,7 @@ public:
     PathSummary &operator-=(const PathSummary &other);
 
     int GetCount() const { return count; };
-    float GetCountPerSec() const { return static_cast<double>(count) / (time(NULL) - oldestTime); };
+    float GetCountPerSec() const { return static_cast<float>(count) / static_cast<float>(time(NULL) - oldestTime); };
     float GetSumTime() const { return sum_time; };
     std::string GetNormalizeKey() const { return normalizeKey; }
     std::string GetMaxLenKey(unsigned int maxLength) const;

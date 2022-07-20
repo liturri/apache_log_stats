@@ -41,7 +41,7 @@ bool LogLine::ParseRegExp()
     std::string timeString = matchVector[4];
 
     time_stamp = StrDate2Time(timeString);
-    secs = std::stof(matchVector[14]) / 1000000.0;
+    secs = std::stof(matchVector[14]) / 1000000.0f;
     return true;
 }
 
@@ -77,13 +77,13 @@ bool LogLine::ParsePcre2()
     std::string timeString = matchVector[4];
 
     time_stamp = StrDate2Time(timeString);
-    secs = std::stof(matchVector[14]) / 1000000.0;
+    secs = std::stof(matchVector[14]) / 1000000.0f;
     return true;
 }
 
 std::string LogLine::NormalizedPath() const
 {
-    int pos = path.find("?");
+    auto pos = path.find("?");
     if (pos)
         return path.substr(0, pos);
     else

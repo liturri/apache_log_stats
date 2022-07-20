@@ -17,10 +17,10 @@ void erase_if(ContainerT &items, const PredicateT &predicate)
 
 void ParseLogFile::CleanOldEntries()
 {
-    const time_t now = time(NULL);
+    const time_t maxOld = time(NULL) - cfg::GetItemsKeepTime();
     for (auto it = urlList.begin(); it != urlList.end();)
     {
-        if (it->GetTime() < now - cfg::GetItemsKeepTime())
+        if (it->GetTime() < maxOld)
         {
             auto normalPath = it->NormalizedPath();
             auto normalSource = it->NormalizedSource();
@@ -46,8 +46,8 @@ void ParseLogFile::CleanOldEntries()
 void ParseLogFile::Loop()
 {
     // Loop for 100 milliseconds
-    auto timeNow = std::chrono::system_clock::now();
-    while (std::chrono::system_clock::now() - timeNow < std::chrono::milliseconds(400))
+    auto timeNow = std::chrono::steady_clock::now();
+    while (std::chrono::steady_clock::now() - timeNow < std::chrono::milliseconds(400))
     {
         std::string line = logFile.ReadLine();
         if (line == "")
@@ -69,10 +69,16 @@ void ParseLogFile::Loop()
             counterPerPath[normalPath] += lline;
         else
             counterPerPath[normalPath] = lline;
-        if (lline.GetTime() >= time(NULL) - 10 * 60)
-            timeCouters[lline.GetTime()]++;
+        auto timeOfLine = lline.GetTime();
+        if (timeOfLine >= time(NULL) - 10 * 60)
+            timeCouters[timeOfLine]++;
     };
-    CleanOldEntries();
+    if (lastCleanUp + std::chrono::seconds(1) < std::chrono::steady_clock::now())
+    {
+        lastCleanUp = std::chrono::steady_clock::now();
+        CleanOldEntries();
+    }
+
 }
 
 // int GetItemsKeepTime() { return itemsKeepTime; };
